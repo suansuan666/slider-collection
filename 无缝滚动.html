@@ -29,6 +29,7 @@
     }
     .slider{
         width:2940px;
+        position: absolute;
     }
     .arrow{
         position: absolute;
@@ -53,7 +54,7 @@
         bottom: 10px;
     }
     .active{
-        background-color: gold;
+        background-color:red;
     }
     
 
@@ -92,48 +93,54 @@
     var timer,isRun=true,isTimer=true;
     
     /*定义改变轮播图的方法*/
-    function change(index){
+    function change(index){        
         isRun=false;
         /*判断方向*/
         var dir=1;
         index>globalIndex ? dir=1 :dir=-1;
+        
         if(index == -1){
         Slider.style.left=-5*490 +"px";
         index=4;
         }
         globalIndex=index;
         timer=setInterval(function(){
-            Slider.style.left=Slider.offsetLeft - dir *10 +"px";   /*10指的是移动速度，可根据要求具体调整 */
+            Slider.style.left=(Slider.offsetLeft - dir *10) +"px";   /*10指的是移动速度，可根据要求具体调整 */
+           
             if(Slider.offsetLeft==-index*490){
                 clearInterval(timer);
                 if(index==5){
                     Slider.style.left=0;
                     globalIndex=0;
                 } 
-            }  
+              
             /*数字按钮状态*/
-            for(var i=0;i<num.length;i++){
-                num[i].classList.remove("active");          /*注意注意这里的active前面不加点！！*/
+            for(var j=0;j<num.length;j++){
+                num[j].classList.remove("active");          /*注意注意这里的active前面不加点！！*/
             }
-              num[globalIndex].classList.add("active");     
+              num[globalIndex].classList.add("active");  
+              console.log(globalIndex);  
               isRun=true;
+        }
+       
+        
         },16)   /*16指的是页面刷新率，一般写16比较合适*/
         console.log("aa");
         
     }
     aLeft.onclick=function(){        /*左箭头*/
        if(isRun){
-           change(globalIndex--);
+           change(globalIndex - 1);
            console.log("cc");
            
        }
     }
     aRight.onclick=function(){      /*右箭头*/
         if(isRun){
-            change(globalIndex++);
+            change(globalIndex + 1);
         }
     }
-    for(i=0;i<num.length;i++){   /*数字按钮*/
+    for(var i=0;i<num.length;i++){   /*数字按钮*/
         num[i].index=i;
         num[i].onclick=function(){
             if(isRun)
@@ -144,10 +151,9 @@
     }
 
     setInterval(function(){    /*定时切换*/
-        if(isRun&isTimer)
+        if(isRun&&isTimer)
         {
-            change(globalIndex++);
-            console.log("bb");
+            change(globalIndex +1);
             
         }
     },1500)

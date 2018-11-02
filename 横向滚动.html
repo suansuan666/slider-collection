@@ -22,11 +22,13 @@
     .box{
         width:70%;
         overflow: hidden;
+        
     }
     .slider{
-        white-space: nowrap;/*文本不换行 使li全排在一行里*/
+        white-space: nowrap;/*文本不换行 使li全排在一行里*/ 
         overflow-y: hidden;
-        overflow-x: hidden;
+        overflow-x: auto;
+        
     }
     </style>
 </head>
@@ -51,7 +53,12 @@
     <script>
     var scroll=$(".slider")[0];
     var timer=null;
-
+    $("#next").on("click",function(){
+      run("left")
+    });
+    $("#prev").on("click",function(){
+      run("right")
+    });
     function run(dir){
         var sDir=dir =="left" ? scroll.scrollLeft +300 :scrollLeft -300;
         $(".slider").animate({
@@ -69,15 +76,19 @@
         else if(scroll.scrollLeft >=scroll.scrollWidth-scroll.clientWidth){   /*scrollWidth是实际内容分的宽度，clientWidth是内容可视区宽度*/
             $("#next").hide();
         }  
-        console.log("bb");
+       
         
     }
     $(".slider").on("scroll",function(){
         if($(this).data("timer")){
             clearTimeout($(this).data("timer"));
         }
-        $(this).data("timer",setTimeout(function(){showArrow()},1000));
-        console.log("cc");
+        $(this).data("timer",setTimeout(function(){
+            showArrow();
+            
+            
+        },1000));
+      
         
     })
 
